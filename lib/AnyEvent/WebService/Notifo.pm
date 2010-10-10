@@ -1,4 +1,7 @@
 package AnyEvent::WebService::Notifo;
+BEGIN {
+  $AnyEvent::WebService::Notifo::VERSION = '0.001';
+}
 
 # ABSTRACT: AnyEvent-powered client for the notifo.com API
 
@@ -7,32 +10,6 @@ use warnings;
 use parent 'Protocol::Notifo';
 use AnyEvent::HTTP;
 
-=constructor new
-
-Creates a new C<AnyEvent::WebService::Notifo> object. See
-L<< Protocol::Notifo->new()|Protocol::Notifo/new >>
-for a explanation of the parameters and the configuration file used for
-default values.
-
-
-=method send_notification
-
-Sends a notification.
-
-It accepts a hash with parameters. We require a C<cb> parameter. This
-must be a coderef or a condvar, that will be called with the response.
-
-In void context, this method returns nothing. In scalar context, it
-returns a guard object. If this object goes out of scope, the request is
-canceled. So you need to keep this guard object alive until your
-callback is called.
-
-See
-L<< Protocol::Notifo->send_notification()|Protocol::Notifo/send_notification >>
-for list of parameters that this method accepts, and an explanation of
-the response that the callback receives.
-
-=cut
 sub send_notification {
   my ($self, %args) = @_;
 
@@ -76,6 +53,18 @@ sub _do_response {
 
 1;
 
+
+__END__
+=pod
+
+=head1 NAME
+
+AnyEvent::WebService::Notifo - AnyEvent-powered client for the notifo.com API
+
+=head1 VERSION
+
+version 0.001
+
 =head1 SYNOPSIS
 
     use AnyEvent;
@@ -101,15 +90,53 @@ sub _do_response {
     $awn->send_notification(msg => 'my nottification text', cb => $cv);
     $res = $cv->recv;  # $res is our response
 
-
 =head1 DESCRIPTION
 
 A client for the L<http://notifo.com/> API using the L<AnyEvent> framework.
 
+=head1 CONSTRUCTORS
+
+=head2 new
+
+Creates a new C<AnyEvent::WebService::Notifo> object. See
+L<< Protocol::Notifo->new()|Protocol::Notifo/new >>
+for a explanation of the parameters and the configuration file used for
+default values.
+
+=head1 METHODS
+
+=head2 send_notification
+
+Sends a notification.
+
+It accepts a hash with parameters. We require a C<cb> parameter. This
+must be a coderef or a condvar, that will be called with the response.
+
+In void context, this method returns nothing. In scalar context, it
+returns a guard object. If this object goes out of scope, the request is
+canceled. So you need to keep this guard object alive until your
+callback is called.
+
+See
+L<< Protocol::Notifo->send_notification()|Protocol::Notifo/send_notification >>
+for list of parameters that this method accepts, and an explanation of
+the response that the callback receives.
 
 =head1 SEE ALSO
 
 L<Protocol::Notifo>, L<AnyEvent>
 
+=head1 AUTHOR
+
+Pedro Melo <melo@simplicidade.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2010 by Pedro Melo.
+
+This is free software, licensed under:
+
+  The Artistic License 2.0
 
 =cut
+
